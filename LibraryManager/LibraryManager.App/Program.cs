@@ -1,4 +1,6 @@
-﻿namespace LibraryManager.App
+﻿using BusinessObjects.Entity;
+
+namespace LibraryManager.App
 {
     public class Program
     {

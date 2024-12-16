@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.App
+﻿namespace BusinessObjects.Entity
 {
     public class Book
     {
