@@ -1,19 +1,35 @@
-﻿public class Program
+﻿namespace LibraryManager.App
 {
-    private static void Main(string[] args)
+    public class Program
     {
-        Console.WriteLine("Hello World!");
-
-        List<Book> books =
-        [
-            new Book("Harry Potter", "Fantastique"),
+        private static void Main(string[] args)
+        {
+            // Create a list of books
+            List<Book> books =
+            [
+                new Book("Harry Potter", "Fantastique"),
             new Book("Le tour du monde en 80 jours", "Aventure"),
             new Book("Le seigneur des anneaux", "Fantastique"),
+            new Book("Shrek", "Aventure"),
+
         ];
 
-        foreach (Book book in books)
-        {
-            Console.WriteLine(book.Name + " - " + book.Type);
+            // Write all books in the console
+            foreach (Book book in books)
+            {
+                Console.WriteLine(book.Name + " - " + book.Type);
+            }
+
+            Console.WriteLine();
+
+            // LINQ Method to get all books of type "Aventure"
+            var queAventure = books.Where(book => book.Type == "Aventure");
+
+            // Write all books of type "Aventure" in the console
+            foreach (Book book in queAventure)
+            {
+                Console.WriteLine(book.Name + " - " + book.Type);
+            }
         }
     }
 }
