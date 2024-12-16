@@ -8,11 +8,10 @@
             List<Book> books =
             [
                 new Book("Harry Potter", "Fantastique"),
-            new Book("Le tour du monde en 80 jours", "Aventure"),
-            new Book("Le seigneur des anneaux", "Fantastique"),
-            new Book("Shrek", "Aventure"),
-
-        ];
+                new Book("Le tour du monde en 80 jours", "Aventure"),
+                new Book("Le seigneur des anneaux", "Fantastique"),
+                new Book("Shrek", "Aventure"),
+            ];
 
             // Write all books in the console
             foreach (Book book in books)
