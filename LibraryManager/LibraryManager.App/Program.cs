@@ -1,4 +1,6 @@
 ﻿using BusinessObjects.Entity;
+using DataAccessLayer.Repository;
+using BusinessObjects.Enum;
 
 namespace LibraryManager.App
 {
@@ -6,16 +8,10 @@ namespace LibraryManager.App
     {
         private static void Main(string[] args)
         {
-            // Create a list of books
-            List<Book> books =
-            [
-                new Book("Harry Potter", "Fantastique"),
-                new Book("Le tour du monde en 80 jours", "Aventure"),
-                new Book("Le seigneur des anneaux", "Fantastique"),
-                new Book("Shrek", "Aventure"),
-            ];
+            BookRepository bookRepository = new();
 
             // Write all books in the console
+            IEnumerable<Book> books = bookRepository.GetAll();
             foreach (Book book in books)
             {
                 Console.WriteLine(book.Name + " - " + book.Type);
@@ -24,7 +20,7 @@ namespace LibraryManager.App
             Console.WriteLine();
 
             // LINQ Method to get all books of type "Aventure"
-            var queAventure = books.Where(book => book.Type == "Aventure");
+            var queAventure = books.Where(book => book.Type == TypeBook.Aventure);
 
             // Write all books of type "Aventure" in the console
             foreach (Book book in queAventure)
