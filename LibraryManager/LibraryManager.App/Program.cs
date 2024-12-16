@@ -1,5 +1,7 @@
 ﻿using BusinessObjects.Entity;
 using BusinessObjects.Enum;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Services.Services;
 
 namespace LibraryManager.App
@@ -30,6 +32,16 @@ namespace LibraryManager.App
 
             Book bookById = catalogManager.FindBook(1);
             Console.WriteLine(bookById.Name + " - " + bookById.Type);
+        }
+
+        private static IHost CreateHostBuilder(IConfigurationBuilder configuration)
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices(services =>
+                {
+                    // Configuration des services
+                })
+                .Build();
         }
     }
 }
