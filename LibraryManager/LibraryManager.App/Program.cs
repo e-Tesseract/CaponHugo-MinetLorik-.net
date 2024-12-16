@@ -1,6 +1,6 @@
 ﻿using BusinessObjects.Entity;
-using DataAccessLayer.Repository;
 using BusinessObjects.Enum;
+using Services.Services;
 
 namespace LibraryManager.App
 {
@@ -8,25 +8,28 @@ namespace LibraryManager.App
     {
         private static void Main(string[] args)
         {
-            BookRepository bookRepository = new();
+            CatalogManager catalogManager = new();
 
             // Write all books in the console
-            IEnumerable<Book> books = bookRepository.GetAll();
+            Console.WriteLine("--- Method GetCatalog() ---");
+            IEnumerable<Book> books = catalogManager.GetCatalog();
             foreach (Book book in books)
             {
                 Console.WriteLine(book.Name + " - " + book.Type);
             }
 
-            Console.WriteLine();
+            Console.WriteLine("\n--- Method GetCatalog(Type type) ---");
 
-            // LINQ Method to get all books of type "Aventure"
-            var queAventure = books.Where(book => book.Type == TypeBook.Aventure);
-
-            // Write all books of type "Aventure" in the console
-            foreach (Book book in queAventure)
+            IEnumerable<Book> adventureBooks = catalogManager.GetCatalog(TypeBook.Aventure);
+            foreach (Book book in books)
             {
                 Console.WriteLine(book.Name + " - " + book.Type);
             }
+
+            Console.WriteLine("\n--- Method FindBook() ---");
+
+            Book bookById = catalogManager.FindBook(1);
+            Console.WriteLine(bookById.Name + " - " + bookById.Type);
         }
     }
 }
