@@ -4,13 +4,13 @@ using DataAccessLayer.Repository;
 
 namespace Services.Services
 {
-    public class CatalogManager
+    public class CatalogManager: ICatalogManager
     {
-        private readonly BookRepository _bookRepository;
+        private readonly IGenericRepository<Book> _bookRepository;
 
-        public CatalogManager()
+        public CatalogManager(IGenericRepository<Book> bookReposiroty)
         {
-            _bookRepository = new BookRepository();
+            _bookRepository = bookReposiroty;
         }
 
         public IEnumerable<Book> GetCatalog()

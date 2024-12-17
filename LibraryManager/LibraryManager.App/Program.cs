@@ -1,6 +1,8 @@
 ﻿using BusinessObjects.Entity;
 using BusinessObjects.Enum;
+using DataAccessLayer.Repository;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Services;
 
@@ -10,7 +12,8 @@ namespace LibraryManager.App
     {
         private static void Main(string[] args)
         {
-            CatalogManager catalogManager = new();
+            var host = CreateHostBuilder();
+            var catalogManager = host.Services.GetRequiredService<ICatalogManager>();
 
             // Write all books in the console
             Console.WriteLine("--- Method GetCatalog() ---");
@@ -34,12 +37,15 @@ namespace LibraryManager.App
             Console.WriteLine(bookById.Name + " - " + bookById.Type);
         }
 
-        private static IHost CreateHostBuilder(IConfigurationBuilder configuration)
+        private static IHost CreateHostBuilder()
         {
             return Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
-                    // Configuration des services
+                    services.AddSingleton<IGenericRepository<Book>, BookRepository>();
+                    services.AddSingleton<IGenericRepository<Author>, AuthorRepository>();
+                    services.AddSingleton<IGenericRepository<Library>, LibraryRepository>();
+                    services.AddSingleton<ICatalogManager, CatalogManager>();
                 })
                 .Build();
         }
