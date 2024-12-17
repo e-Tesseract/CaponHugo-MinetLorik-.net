@@ -1,23 +1,32 @@
 ﻿using BusinessObjects.Entity;
-using BusinessObjects.Enum;
+using DataAccessLayer.Contexts;
 
 namespace DataAccessLayer.Repository
 {
     public class BookRepository: IGenericRepository<Book>
     {
+        private readonly LibraryContext _libraryContext;
+
+        public BookRepository(LibraryContext libraryContext)
+        {
+            _libraryContext = libraryContext;
+        }
+
         public IEnumerable<Book> GetAll()
         {
-            return [
-                new Book(1, "Harry Potter", TypeBook.Fantastique, 300, 10, new Author(1, "J.K.", "Rowling")),
-                new Book(2, "Le tour du monde en 80 jours", TypeBook.Aventure, 200, 8, new Author(2, "Jules", "Verne")),
-                new Book(3, "Le seigneur des anneaux", TypeBook.Fantastique, 500, 9, new Author(3, "J.R.R.", "Tolkien")),
-                new Book(4, "Shrek", TypeBook.Aventure, 100, 7, new Author(4, "William" , "Steig")),
-            ];
+            return _libraryContext.Books;
         }
 
         public Book Get(int id)
         {
-            return new Book(1, "Book", TypeBook.Fantastique, 0, 0, new Author(1, "FirstNameAuthor", "LastNameAuthor"));
+            return _libraryContext.Books.FirstOrDefault(book => book.Id == id);
+        }
+
+        public Book Add(Book book) 
+        {
+            _libraryContext.Books.Add(book);
+            _libraryContext.SaveChanges();
+            return book;
         }
     }
 }
