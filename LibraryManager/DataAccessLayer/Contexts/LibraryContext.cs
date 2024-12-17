@@ -13,11 +13,5 @@ namespace DataAccessLayer.Contexts
         {
             base.OnConfiguring(optionsBuilder);
         }
-
-        string DBpath = "../library.db";
-
-
-
     }
 }
-

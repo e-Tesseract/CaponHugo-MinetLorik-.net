@@ -1,9 +1,11 @@
 ﻿using BusinessObjects.Entity;
 using BusinessObjects.Enum;
+using DataAccessLayer.Contexts;
 using DataAccessLayer.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManager.App
 {
@@ -38,6 +40,7 @@ namespace LibraryManager.App
 
         private static IHost CreateHostBuilder()
         {
+            string path = "../DataAccessLayer/library.db";
             return Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
@@ -45,6 +48,8 @@ namespace LibraryManager.App
                     services.AddSingleton<IGenericRepository<Author>, AuthorRepository>();
                     services.AddSingleton<IGenericRepository<Library>, LibraryRepository>();
                     services.AddSingleton<ICatalogManager, CatalogManager>();
+                    services.AddDbContext<LibraryContext>(options =>
+                      options.UseSqlite($"Data Source={path};"));
                 })
                 .Build();
         }
