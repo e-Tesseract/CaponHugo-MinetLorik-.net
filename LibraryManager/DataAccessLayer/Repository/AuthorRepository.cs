@@ -19,6 +19,10 @@ namespace DataAccessLayer.Repository
             return new Author(1, "FirstNameAuthor", "LastNameAuthor");
         }
 
+        public Author Add(Author author)
+        {
+            return author;
+        }
 
     }
 }

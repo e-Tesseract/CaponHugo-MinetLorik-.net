@@ -16,5 +16,10 @@ namespace DataAccessLayer.Repository
         {
             return new Library(1, "Library", "Adress", []);
         }
+
+        Library IGenericRepository<Library>.Add(Library entity)
+        {
+            return entity;
+        }
     }
 }

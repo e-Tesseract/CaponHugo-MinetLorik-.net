@@ -44,9 +44,9 @@ namespace LibraryManager.App
             return Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
-                    services.AddSingleton<IGenericRepository<Book>, BookRepository>();
-                    services.AddSingleton<IGenericRepository<Author>, AuthorRepository>();
-                    services.AddSingleton<IGenericRepository<Library>, LibraryRepository>();
+                    services.AddSingleton<IGenericRepository<Book>, GenericRepository<Book>>();
+                    services.AddSingleton<IGenericRepository<Author>, GenericRepository<Author>>();
+                    services.AddSingleton<IGenericRepository<Library>, GenericRepository<Library>>();
                     services.AddSingleton<ICatalogManager, CatalogManager>();
                     services.AddDbContext<LibraryContext>(options =>
                       options.UseSqlite($"Data Source={path};"));
