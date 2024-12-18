@@ -41,7 +41,7 @@ namespace LibraryManager.App
 
         private static IHost CreateHostBuilder()
         {
-            string path = "";
+            string path = Path.GetFullPath($"{Directory.GetCurrentDirectory()}\\library.db");
             return Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
