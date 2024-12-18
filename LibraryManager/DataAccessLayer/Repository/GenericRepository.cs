@@ -17,7 +17,9 @@ namespace DataAccessLayer.Repository
 
         public IEnumerable<T> GetAll()
         {
+
             return _dbSet.ToList();
+
         }
 
         public T Get(int id)
@@ -28,6 +30,14 @@ namespace DataAccessLayer.Repository
         public T Add(T entity)
         {
             _dbSet.Add(entity);
+            _libraryContext.SaveChanges();
+            return entity;
+        }
+
+        public T Delete(int id)
+        {
+            var entity = _dbSet.First(book => book.Id == id);
+            _dbSet.Remove(entity);
             _libraryContext.SaveChanges();
             return entity;
         }

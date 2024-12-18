@@ -4,7 +4,7 @@ using DataAccessLayer.Repository;
 
 namespace Services.Services
 {
-    public class CatalogManager: ICatalogManager
+    public class CatalogManager : ICatalogManager
     {
         private readonly IGenericRepository<Book> _bookRepository;
 
@@ -27,5 +27,21 @@ namespace Services.Services
         {
             return _bookRepository.Get(id);
         }
+
+        public Book AddBook(Book book)
+        {
+            return _bookRepository.Add(book);
+        }
+
+        public Book GetTopRatedBook()
+        {
+            return _bookRepository.GetAll().OrderByDescending(book => book.Rate).FirstOrDefault();
+        }
+
+        public Book DeleteBook(int id)
+        {
+            return _bookRepository.Delete(id);
+        }
+
     }
 }

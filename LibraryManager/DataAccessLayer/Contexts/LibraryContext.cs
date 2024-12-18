@@ -1,4 +1,5 @@
 ﻿using BusinessObjects.Entity;
+using BusinessObjects.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Contexts
@@ -11,6 +12,15 @@ namespace DataAccessLayer.Contexts
 
         public LibraryContext(DbContextOptions<LibraryContext> options): base(options)
         {
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Book>()
+                .Property(e => e.Type)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (TypeBook)Enum.Parse(typeof(TypeBook), v));
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

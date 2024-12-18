@@ -10,6 +10,9 @@
         Thriller,
         Horreur,
         Humour,
-        Biographie
+        Biographie,
+        Enseignement,
+        Histoire,
+        Juridique
     }
 }

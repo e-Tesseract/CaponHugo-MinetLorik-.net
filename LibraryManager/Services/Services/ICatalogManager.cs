@@ -8,5 +8,11 @@ namespace Services.Services
         public IEnumerable<Book> GetCatalog();
         public IEnumerable<Book> GetCatalog(TypeBook type);
         public Book FindBook(int id);
+
+        public Book AddBook(Book book);
+
+        public Book GetTopRatedBook();
+
+        public Book DeleteBook(int id);
     }
 }

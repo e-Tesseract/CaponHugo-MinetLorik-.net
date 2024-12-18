@@ -1,4 +1,5 @@
-﻿using BusinessObjects.Enum;
+﻿using BusinessObjects.Entity;
+using BusinessObjects.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -9,17 +10,15 @@ namespace LibraryManager.Hosting.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly CatalogManager _catalogManager;
+        private readonly ICatalogManager _catalogManager;
 
-        public BookController(CatalogManager catalogManager)
+        public BookController(ICatalogManager catalogManager)
         {
             _catalogManager = catalogManager;
         }
 
         // GET: books
         [HttpGet]
-        [Route("books")]
-
         public IActionResult GetBooks()
         {
             var catalog = _catalogManager.GetCatalog();
@@ -28,7 +27,7 @@ namespace LibraryManager.Hosting.Controllers
 
         // GET : book/{id}
         [HttpGet]
-        [Route("{id}")]
+        [Route("book/{id}")]
         public IActionResult GetBook(int id)
         {
             var book = _catalogManager.FindBook(id);
@@ -41,7 +40,7 @@ namespace LibraryManager.Hosting.Controllers
 
         // GET : books/{type}
         [HttpGet]
-        [Route("{type}")]
+        [Route("books/{type}")]
         public IActionResult GetBooksByType(TypeBook type)
         {
             var catalog = _catalogManager.GetCatalog(type);
@@ -53,7 +52,34 @@ namespace LibraryManager.Hosting.Controllers
         }
 
         // POST : book/add
-      
+        [HttpPost]
+        [Route("book/add")]
+        public IActionResult AddBook([FromBody] Book book)
+        {
+            var newBook = _catalogManager.AddBook(book);
+            return CreatedAtAction(nameof(GetBook), new { id = newBook.Id }, newBook);
+        }
 
+        // GET : book/topRatedBook
+        [HttpGet]
+        [Route("book/topRatedBook")]
+        public IActionResult GetTopRatedBook()
+        {
+            var topRatedBook = _catalogManager.GetTopRatedBook();
+            return Ok(topRatedBook);
+        }
+
+        // POST : book/delete
+        [HttpPost]
+        [Route("book/delete")]
+        public IActionResult DeleteBook([FromBody] int id)
+        {
+            var book = _catalogManager.DeleteBook(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
+        }
     }
 }
