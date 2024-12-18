@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace LibraryManager.App
 {
@@ -40,7 +41,7 @@ namespace LibraryManager.App
 
         private static IHost CreateHostBuilder()
         {
-            string path = "../DataAccessLayer/library.db";
+            string path = "";
             return Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
@@ -49,7 +50,10 @@ namespace LibraryManager.App
                     services.AddSingleton<IGenericRepository<Library>, GenericRepository<Library>>();
                     services.AddSingleton<ICatalogManager, CatalogManager>();
                     services.AddDbContext<LibraryContext>(options =>
-                      options.UseSqlite($"Data Source={path};"));
+                      options.UseSqlite($"Data Source={path};")
+                             .EnableSensitiveDataLogging(false)
+                             .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning)))
+                      );
                 })
                 .Build();
         }
