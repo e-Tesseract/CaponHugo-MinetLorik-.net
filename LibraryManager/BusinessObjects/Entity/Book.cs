@@ -16,11 +16,8 @@ namespace BusinessObjects.Entity
 
         public int Rate { get; set; }
 
-        [ForeignKey("AuthorId")]
+        [ForeignKey("id_author")]
         public Author Author { get; set; }
-
-        [Column("id_author")]
-        public int AuthorId { get; set; }
 
         public IEnumerable<Library> Libraries { get; set; }
 
