@@ -17,12 +17,18 @@ namespace LibraryManager.Hosting.Controllers
             _catalogManager = catalogManager;
         }
 
+        private static BookDto ConvertToBookDto(Book book)
+        {
+            return new BookDto(book.Id, book.Name, book.Type, book.Pages, book.Author);
+        }
+
         // GET: books
         [HttpGet]
         public IActionResult GetBooks()
         {
             var catalog = _catalogManager.GetCatalog();
-            return Ok(catalog);
+            var catalogDtos = catalog.Select(ConvertToBookDto);
+            return Ok(catalogDtos);
         }
 
         // GET : book/{id}
@@ -35,7 +41,8 @@ namespace LibraryManager.Hosting.Controllers
             {
                 return NotFound();
             }
-            return Ok(book);
+            var bookDto = ConvertToBookDto(book);
+            return Ok(bookDto);
         }
 
         // GET : books/{type}
@@ -48,7 +55,8 @@ namespace LibraryManager.Hosting.Controllers
             {
                 return NotFound();
             }
-            return Ok(catalog);
+            var catalogDtos = catalog.Select(ConvertToBookDto);
+            return Ok(catalogDtos);
         }
 
         // POST : book/add
@@ -66,7 +74,8 @@ namespace LibraryManager.Hosting.Controllers
         public IActionResult GetTopRatedBook()
         {
             var topRatedBook = _catalogManager.GetTopRatedBook();
-            return Ok(topRatedBook);
+            var bookDto = ConvertToBookDto(topRatedBook);
+            return Ok(bookDto);
         }
 
         // POST : book/delete

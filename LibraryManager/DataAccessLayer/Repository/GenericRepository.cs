@@ -24,7 +24,7 @@ namespace DataAccessLayer.Repository
 
         public T Get(int id)
         {
-            return _dbSet.First(book => book.Id == id);
+            return _dbSet.First(entity => entity.Id == id);
         }
 
         public T Add(T entity)
@@ -36,7 +36,7 @@ namespace DataAccessLayer.Repository
 
         public T Delete(int id)
         {
-            var entity = _dbSet.First(book => book.Id == id);
+            var entity = _dbSet.First(entity => entity.Id == id);
             _dbSet.Remove(entity);
             _libraryContext.SaveChanges();
             return entity;
